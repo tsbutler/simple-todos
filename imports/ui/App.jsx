@@ -21,20 +21,20 @@ class App extends Component {
   handleSubmit(event) {
     event.preventDefault();
 
-    //Find the text field via the React ref
+    // Find the text field via the React ref
     const text = ReactDOM.findDOMNode(this.refs.textInput).value.trim();
 
     Meteor.call('tasks.insert', text);
 
     // Clear form
-    ReactDOM.findDOMNode(this.refs.textInput).value = ''
-   }
+    ReactDOM.findDOMNode(this.refs.textInput).value = '';
+  }
 
-   toggleHideCompleted() {
+  toggleHideCompleted() {
     this.setState({
       hideCompleted: !this.state.hideCompleted,
     });
-   }
+  }
 
   renderTasks() {
     let filteredTasks = this.props.tasks;
@@ -47,13 +47,14 @@ class App extends Component {
 
       return (
         <Task
-          key={task.id}
+          key={task._id}
           task={task}
           showPrivateButton={showPrivateButton}
         />
       );
-    });  
-  }  
+    });
+  }
+
   render() {
     return (
       <div className="container">
@@ -72,14 +73,14 @@ class App extends Component {
 
           <AccountsUIWrapper />
 
-          {this.props.currentUser ?
+          { this.props.currentUser ?
             <form className="new-task" onSubmit={this.handleSubmit.bind(this)} >
               <input
-              type="text"
-              ref="textInput"
-              placeholder="Type to add new tasks"
-            />
-          </form>  : ''
+                type="text"
+                ref="textInput"
+                placeholder="Type to add new tasks"
+              />
+            </form> : ''
           }
         </header>
 
